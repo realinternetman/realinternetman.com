@@ -1,4 +1,4 @@
-import { attributes, react as HomeContent } from '@/content/home.md';
+import { attributes, react as HomeContent } from '~/content/home.md';
 
 import { Metadata } from 'next';
 import Script from 'next/script';
