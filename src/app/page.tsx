@@ -1,4 +1,9 @@
-import { attributes, react as HomeContent } from '#/home.md';
+// import { attributes, react as HomeContent } from '#/home.md';
+// import {
+//   attributes,
+//   react as HomeContent,
+// } from '#/posts/2020-02-16_netlify-netlify-cms-gatsbyjsでブログを構築した.md';
+import { Post, fetchPosts } from '@/lib/content';
 
 import { Metadata } from 'next';
 import Script from 'next/script';
@@ -11,19 +16,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  let { title, cats } = attributes;
+export default async function Home() {
+  const posts = await fetchPosts({ page: 1, limit: 3, orderBy: 'date:desc' });
+  console.log(posts);
+  // let { title, cats } = attributes;
   return (
     <>
-      <Script src="https://identity.netlify.com/v1/netlify-identity-widget.js" />
       <article>
-        <h1>{title}</h1>
-        <HomeContent />
+        <h1>My blog</h1>
         <ul>
-          {cats.map((cat: { name: string; description: string }, k: string) => (
-            <li key={k}>
-              <h2>{cat.name}</h2>
-              <p>{cat.description}</p>
+          {posts.map((post: Post, index) => (
+            <li key={index}>
+              <h2>{post.title}</h2>
+              <p>{post.slug}</p>
             </li>
           ))}
         </ul>

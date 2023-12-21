@@ -1,23 +1,87 @@
 backend:
   name: github
   repo: realinternetman/realinternetman.com
-  branch: main # Branch to update (optional; defaults to master)
-media_folder: public/img
-public_folder: img
+  branch: main
+
+media_folder: content/assets
+public_folder: assets
+publish_mode: editorial_workflow
+show_preview_links: true
+
+config:
+  posts:
+    categories: &config.posts.categories
+      - { label: Blog, value: blog }
+      - { label: Tech, value: tech }
 collections:
-  - name: 'pages'
-    label: 'Pages'
-    files:
-      - label: 'Home'
-        name: 'home'
-        file: 'content/home.md'
-        fields:
-          - { label: 'Title', name: 'title', widget: 'string' }
-          - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-          - { label: 'Body', name: 'body', widget: 'markdown' }
-          - label: 'Cats'
-            name: 'cats'
-            widget: list
-            fields:
-              - { label: 'Name', name: 'name', widget: 'string' }
-              - { label: 'Description', name: 'description', widget: 'text' }
+  - name: posts
+    label: Posts
+    folder: content/posts
+    create: true
+    slug: &posts_slug '{{year}}-{{month}}-{{day}}_{{slug}}'
+    summary: '{{year}}-{{month}}-{{day}} - [{{category}}] {{title}}'
+    fields: &posts_fields
+      - { name: title, label: Title }
+      - { name: date, label: Date, widget: date }
+      - name: category
+        label: Category
+        widget: select
+        options: *config.posts.categories
+      - name: tags
+        label: 'Tags'
+        widget: 'relation'
+        collection: 'tags'
+        multiple: true
+        searchFields: ['label', 'value']
+        valueField: 'value'
+        displayFields: ['label']
+      - { name: body, label: Body, widget: markdown }
+      - {
+          name: heading_image,
+          label: Heading Image,
+          widget: image,
+          allow_multiple: false,
+          required: false,
+        }
+      - { name: slug, label: Slug, widget: string, required: false }
+  - name: 'posts_blog'
+    label: 'Posts > Blog'
+    folder: content/posts
+    filter: { field: 'category', value: 'blog' }
+    slug: *posts_slug
+    summary: '{{year}}-{{month}}-{{day}} - {{title}}'
+    fields: *posts_fields
+  - name: 'posts_tech'
+    label: 'Posts > Tech'
+    folder: content/posts
+    filter: { field: 'category', value: 'tech' }
+    slug: *posts_slug
+    summary: '{{year}}-{{month}}-{{day}} - {{title}}'
+    fields: *posts_fields
+
+  - name: tags
+    label: Posts > Relations > Tags
+    folder: content/tags
+    create: true
+    identifier_field: value
+    slug: '{{value}}'
+    summary: '[{{category}}] {{label}}'
+    fields:
+      - { name: label, label: Label }
+      - { name: value, label: Value }
+      - name: category
+        label: Category
+        widget: select
+        options: *config.posts.categories
+
+  - name: pages
+    label: Pages
+    folder: content/pages
+    create: true
+    identifier_field: title
+    slug: '{{fields.slug}}'
+    fields:
+      - { name: title, label: Title }
+      - { name: date, label: Date, widget: date }
+      - { name: body, label: Body, widget: markdown }
+      - { name: slug, label: Slug, widget: string }
