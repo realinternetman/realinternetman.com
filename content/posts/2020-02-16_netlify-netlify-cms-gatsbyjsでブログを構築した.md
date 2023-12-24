@@ -1,13 +1,13 @@
 ---
 title: Netlify + Netlify CMS + GatsbyJSでブログを構築した
 date: 2020-02-16T04:28:51.171Z
-category: tech
 tags:
   - gatsbyjs
   - netlify
   - netlify_cms
   - blog
 ---
+
 もう三ヶ月も前の話だけど、元々Conoha VPS(Ubuntu) + WordPressで運用してたブログの構成を、Netlify + Netlify CMS + GatsbyJSに置き換えた。
 
 同じような構成を検討してる人に向け、各サービス・ツール毎の利点、欠点など忘れないうちに記しておこうと思う。
@@ -109,8 +109,8 @@ Reactベースのフレームワークなので、最新のフロントエンド
 
 あまり馴染みのない場合も公式チュートリアルが充実してるので、一通り実践すれば何となくわかってくるはず。見た目にこだわりが無ければ、Starter Library（初期テンプレートみたいなやつ）を適当に入れて、あとはドキュメントを元に適宜調整するだけでも十分それっぽくなると思う。
 
-* [Gatsby.js Tutorials | GatsbyJS](https://www.gatsbyjs.org/tutorial/)
-* [Starter Library | GatsbyJS](https://www.gatsbyjs.org/starters?v=2)
+- [Gatsby.js Tutorials | GatsbyJS](https://www.gatsbyjs.org/tutorial/)
+- [Starter Library | GatsbyJS](https://www.gatsbyjs.org/starters?v=2)
 
 僕自身フロントエンド開発に弱く、仕事でたまにVue.jsを使う程度でReactは未経験だったので、勉強を兼ねてフルスクラッチでテンプレートを作ってみた。お陰で完成までにかなり時間を要したが、それなりに知見も得られた。
 

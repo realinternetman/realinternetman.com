@@ -1,7 +1,6 @@
 ---
 title: ConoHa VPS(Ubuntu16.04)+ApacheでLet’s Encryptの設定をした
 date: 2018-01-11T13:46:52.000Z
-category: tech
 tags:
   - ubuntu
   - ssl

@@ -8,25 +8,16 @@ public_folder: assets
 publish_mode: editorial_workflow
 show_preview_links: true
 
-config:
-  posts:
-    categories: &config.posts.categories
-      - { label: Blog, value: blog }
-      - { label: Tech, value: tech }
 collections:
   - name: posts
     label: Posts
     folder: content/posts
     create: true
-    slug: &posts_slug '{{year}}-{{month}}-{{day}}_{{slug}}'
-    summary: '{{year}}-{{month}}-{{day}} - [{{category}}] {{title}}'
+    slug: &posts_slug '{{year}}-{{month}}-{{day}}_{{fields.slug}}'
+    summary: '{{year}}-{{month}}-{{day}} - {{title}}'
     fields: &posts_fields
       - { name: title, label: Title }
-      - { name: date, label: Date, widget: date }
-      - name: category
-        label: Category
-        widget: select
-        options: *config.posts.categories
+      - { name: date, label: Date, widget: datetime, required: true }
       - name: tags
         label: 'Tags'
         widget: 'relation'
@@ -44,23 +35,8 @@ collections:
           required: false,
         }
       - { name: slug, label: Slug, widget: string, required: false }
-  - name: 'posts_blog'
-    label: 'Posts > Blog'
-    folder: content/posts
-    filter: { field: 'category', value: 'blog' }
-    slug: *posts_slug
-    summary: '{{year}}-{{month}}-{{day}} - {{title}}'
-    fields: *posts_fields
-  - name: 'posts_tech'
-    label: 'Posts > Tech'
-    folder: content/posts
-    filter: { field: 'category', value: 'tech' }
-    slug: *posts_slug
-    summary: '{{year}}-{{month}}-{{day}} - {{title}}'
-    fields: *posts_fields
-
   - name: tags
-    label: Posts > Relations > Tags
+    label: Posts > Tags
     folder: content/tags
     create: true
     identifier_field: value
@@ -72,7 +48,9 @@ collections:
       - name: category
         label: Category
         widget: select
-        options: *config.posts.categories
+        options:
+          - { label: Blog, value: blog }
+          - { label: Tech, value: tech }
 
   - name: pages
     label: Pages
@@ -82,6 +60,6 @@ collections:
     slug: '{{fields.slug}}'
     fields:
       - { name: title, label: Title }
-      - { name: date, label: Date, widget: date }
+      - { name: date, label: Date, widget: datetime }
       - { name: body, label: Body, widget: markdown }
       - { name: slug, label: Slug, widget: string }

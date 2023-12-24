@@ -1,12 +1,4 @@
-// import { attributes, react as HomeContent } from '#/home.md';
-// import {
-//   attributes,
-//   react as HomeContent,
-// } from '#/posts/2020-02-16_netlify-netlify-cms-gatsbyjsでブログを構築した.md';
-import { Post, fetchPosts } from '@/lib/content';
-
 import { Metadata } from 'next';
-import Script from 'next/script';
 
 export const metadata: Metadata = {
   robots: {
@@ -17,22 +9,14 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const posts = await fetchPosts({ page: 1, limit: 3, orderBy: 'date:desc' });
-  console.log(posts);
-  // let { title, cats } = attributes;
   return (
-    <>
-      <article>
-        <h1>My blog</h1>
-        <ul>
-          {posts.map((post: Post, index) => (
-            <li key={index}>
-              <h2>{post.title}</h2>
-              <p>{post.slug}</p>
-            </li>
-          ))}
-        </ul>
-      </article>
-    </>
+    <div className="flex flex-col">
+      <div className="flex justify-center">
+        <img src="/assets/images/profile.png" alt="profile" />
+      </div>
+      <div className="flex">
+        <p className="text-xl">Make Internet Great Again.</p>
+      </div>
+    </div>
   );
 }
