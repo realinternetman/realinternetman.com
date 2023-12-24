@@ -1,7 +1,11 @@
 import path from 'path';
-import fs from 'fs';
 
-import { contentDir, loadMarkdown } from '@/lib/content';
+import {
+  contentDir,
+  loadMarkdown,
+  fetchContentList,
+  fetchContentDetails,
+} from '@/lib/content';
 
 const pagesDir = path.join(contentDir, 'pages');
 
@@ -21,17 +25,12 @@ async function loadPageData(fileName: string): Promise<Page> {
 }
 
 export async function listAllPages() {
-  const fileNames = fs.readdirSync(pagesDir);
-
-  const posts: Page[] = await Promise.all(
-    fileNames.map(async (fileName: string) => {
-      return await loadPageData(fileName);
-    }),
-  );
-
-  return posts;
+  const pages: Page[] = await fetchContentList(pagesDir);
+  return pages;
 }
 
 export async function getPage(slug: string): Promise<Page> {
-  return await loadPageData(`${slug}.md`);
+  const page = await fetchContentDetails(path.join(pagesDir, `${slug}.md`));
+  console.log(page);
+  return page as unknown as Page;
 }
